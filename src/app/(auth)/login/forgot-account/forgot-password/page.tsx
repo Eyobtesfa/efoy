@@ -5,8 +5,9 @@ import { forgetPassword } from "@/lib/auth/auth-client";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import React, { Suspense } from "react";
 
-export default  function page(){
+  function ForgotPassword(){
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const params = useSearchParams();
@@ -30,6 +31,7 @@ export default  function page(){
     }
 
     return(
+        <Suspense>
         <form 
         onSubmit={handleSubmit}
         className="flex flex-col items-center justify-center w-full h-full gap-4 p-4">
@@ -60,5 +62,14 @@ export default  function page(){
             {message && <p className="text-sm text-red-500">{message}</p>}
 
         </form>
+        </Suspense>
     )
 };
+
+export default function Page(){
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center w-full h-full">Loading...</div>}>
+            <ForgotPassword />
+        </Suspense>
+    );
+}
